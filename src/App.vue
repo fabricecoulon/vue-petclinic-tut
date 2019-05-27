@@ -2,7 +2,13 @@
   <div id="app" class="small-container">
     <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
       <h1>Pet owners</h1>
+      <!-- Retrieving events from the child component OwnerForm
+      and reroute it to this application addOwner. '@' is the shortcut
+      for Vue's directive 'v-on' -->
       <owner-form @add:owner="addOwner"></owner-form>
+      <!-- Binding the component attribute owners to this array of owners
+      ':' is the shortcut for Vue's directive 'v-bind'
+      -->
       <owners-table :owners="owners"></owners-table>
   </div>
 </template>
@@ -35,6 +41,11 @@ export default {
       const newOwner = { ...owner, id };
       this.owners = [ ...this.owners, newOwner ];
     }
+  },
+  mounted() {
+    // This method is called once after Vue has been 'mounted' to a given DOM
+    // which is specified in main.js with function mount()
+    //alert("Vue has been mounted on #app")
   }
 }
 </script>

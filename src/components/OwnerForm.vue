@@ -1,7 +1,14 @@
 <template>
   <div id="owner-form">
+    <!-- When pressing this form button, this component
+    handleSubmit will be called first: -->
     <form @submit.prevent="handleSubmit">
       <label>Firstname</label>
+      <!-- ':class' is Vue's class style binding
+      it is used in this case to dynamically set the style class of this input
+      to {'has-error': true} style if both submitting is true and
+      invalidFName is true. A similar method is used for the two other inputs
+      -->
       <input ref="first" type="text"
         :class="{ 'has-error': submitting && invalidFName }"
         v-model="owner.fname"
@@ -21,6 +28,7 @@
         v-model="owner.email"
         @focus="clearStatus"
       >
+      <!-- In case of error on submitting -->
       <p
         v-if="error && submitting"
         class="error-message"
@@ -28,7 +36,7 @@
       <p
         v-if="success"
         class="success-message"
-      >✅ Owner successfully added</p>
+      >✅ Owner '{{ showFullName }}' successfully added</p>
       <button>Add Owner</button>
     </form>
   </div>
@@ -46,9 +54,17 @@ export default {
         fname: '',
         lname: '',
         email: '',
+      },
+      lastsubmittedowner: {
+        fname: '',
+        lname: ''
       }
     }
   },
+  // computed properties on the forms 'v-model' this.owner...
+  // these are methods that can be called before rendering occurs to process
+  // data before is is shown. For example showFullName concat the last
+  // submitted owners' first and last name
   computed: {
     invalidFName() {
       return this.owner.fname === ''
@@ -59,10 +75,16 @@ export default {
     invalidEmail() {
       return this.owner.email === ''
     },
+    showFullName() {
+      return this.lastsubmittedowner.fname + " " + this.lastsubmittedowner.lname
+    }
   },
+  // Custom methods MUST be put under Vue's 'methods:'
   methods: {
+    // Called by pressing the form's template button
     handleSubmit() {
       this.clearStatus()
+      // Flag that we are in status 'submitting'
       this.submitting = true
 
       if (this.invalidFName || this.invalidLName || this.invalidEmail) {
@@ -70,8 +92,16 @@ export default {
         return
       }
 
+      // Emit an event that can be caught by any registered listeners
+      // this event is by Vue standards called 'add:owner' with colon and
+      // has one argument, this owner's object/model
       this.$emit('add:owner', this.owner)
+
+      // Return the focus to the form's element tagged with ref "first"
       this.$refs.first.focus()
+
+      this.lastsubmittedowner.fname = this.owner.fname
+      this.lastsubmittedowner.lname = this.owner.lname
       this.owner = {
         fname: '',
         lname: '',
@@ -79,6 +109,7 @@ export default {
       }
       this.success = true
       this.error = false
+      // Flag that we are not in status 'submitting' anymore
       this.submitting = false
     },
 
