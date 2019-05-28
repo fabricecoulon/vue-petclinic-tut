@@ -20,7 +20,7 @@
           <br />
 
           <div class="modal-footer">
-              <button class="button" @click="$emit('close')">
+              <button class="button" @click="$emit('ok')">
                 OK
               </button>
               <button class="button" @click="$emit('cancel')">

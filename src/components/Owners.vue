@@ -14,9 +14,11 @@
       >
       </owners-table>
 
-      <modal v-if="showModal" @close="showModal = false">
-        <h3 slot="header">Delete</h3>
-        <span slot="body">Are you sure you want to delete XYZ ?</span>
+      <modal v-if="showModal" @ok="onActionOk" @cancel="onActionCancel">
+        <h3 slot="header">Confirm deletion</h3>
+        <span slot="body">
+          Are you sure you want to delete '{{ownerMatching(deleteId).fname + " " + ownerMatching(deleteId).lname}}'?
+        </span>
       </modal>
   </div>
 </template>
@@ -39,7 +41,8 @@ export default {
         { id:0, fname: "fname1", lname: "lname1", email: "fname1.lname1@email.com" },
         { id:1, fname: "fname2", lname: "lname2", email: "fname2.lname2@email.com" }
       ],
-      showModal: false
+      showModal: false,
+      deleteId: -1
     }
   },
   methods: {
@@ -52,12 +55,25 @@ export default {
     },
     deleteOwner(ownerId) {
       this.showModal = true;
-      console.log("deleteOwner: " + ownerId);
+      this.deleteId = ownerId;
     },
     doDeleteOwner(ownerId) {
+      if (ownerId < 0) return;
       this.owners = this.owners.filter(
         owner => owner.id !== ownerId
       );
+    },
+    onActionOk() {
+      this.showModal = false;
+      this.doDeleteOwner(this.deleteId);
+    },
+    onActionCancel() {
+      this.showModal = false;
+      this.deleteId = -1;
+    },
+    ownerMatching(id) {
+      const set = this.owners.filter(owner => owner.id == id);
+      return (set && set.length > 0)?set[0]:null;
     }
   },
   mounted() {
