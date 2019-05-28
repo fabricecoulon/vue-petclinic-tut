@@ -8,7 +8,11 @@
       <!-- Binding the component attribute owners to this array of owners
       ':' is the shortcut for Vue's directive 'v-bind'
       -->
-      <owners-table :owners="owners"></owners-table>
+      <owners-table
+        :owners="owners"
+        @delete:owner="deleteOwner"
+      >
+      </owners-table>
   </div>
 </template>
 
@@ -37,6 +41,11 @@ export default {
       const id = lastId + 1;
       const newOwner = { ...owner, id };
       this.owners = [ ...this.owners, newOwner ];
+    },
+    deleteOwner(ownerId) {
+      this.owners = this.owners.filter(
+        owner => owner.id !== ownerId
+      );
     }
   },
   mounted() {
