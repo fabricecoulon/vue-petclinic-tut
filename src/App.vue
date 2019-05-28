@@ -1,8 +1,9 @@
 <template>
   <div id="app" class="small-container">
-    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
-      <main-tabs :maintabs="maintabs"></main-tabs>
-      <span v-if="current==0"><owners></owners></span>
+      <!-- In the custom event listener below do not use "selectTab(arg)"
+      but just "selectTab" -->
+      <main-tabs :maintabs="maintabs" @select:tabid="selectTab"></main-tabs>
+      <span v-show="maintabs[0].selected"><owners></owners></span>
   </div>
 </template>
 
@@ -21,10 +22,16 @@ export default {
   data() {
     return {
       maintabs: [
-        {name: "Owners", selected: true },
-        {name: "Pets", selected: false}
-      ],
-      current: 0
+        {id: 0, name: "Owners", selected: true },
+        {id: 1, name: "Pets", selected: false}
+      ]
+    }
+  },
+  methods: {
+    selectTab(tabid) {
+      this.maintabs.forEach(tab => {
+        tab.selected = (tab.id == tabid);
+      });
     }
   }
 }

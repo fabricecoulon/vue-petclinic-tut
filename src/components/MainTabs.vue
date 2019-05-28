@@ -5,7 +5,12 @@
     to conditionnally apply a css class style based on some object props.
     -->
     <span v-for="t in maintabs" :key="t.id">
-      <button :class="{'button': t.selected, 'muted-button': !t.selected}">{{ t.name }}</button>
+      <button
+        :class="{'button': t.selected, 'muted-button': !t.selected}"
+        @click="buttonClicked(t.id)"
+      >
+      {{ t.name }}
+      </button>
     </span>
   </div>
 </template>
@@ -15,6 +20,11 @@ export default {
   name: 'main-tabs',
   props: {
     maintabs: Array
+  },
+  methods: {
+    buttonClicked(id) {
+      this.$emit('select:tabid', id);
+    }
   }
 }
 </script>
