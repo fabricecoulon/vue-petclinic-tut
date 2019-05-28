@@ -17,13 +17,15 @@
             </slot>
           </div>
 
+          <br />
+
           <div class="modal-footer">
-            <slot name="footer">
-              default footer
-              <button class="modal-default-button" @click="$emit('close')">
+              <button class="button" @click="$emit('close')">
                 OK
               </button>
-            </slot>
+              <button class="button" @click="$emit('cancel')">
+                Cancel
+              </button>
           </div>
         </div>
       </div>
@@ -70,25 +72,11 @@ export default {
 
 .modal-header h3 {
   margin-top: 0;
-  color: #42b983;
 }
 
-.modal-body {
-  margin: 20px 0;
+.modal-footer button {
+  margin: 0 0.5rem 0 0;
 }
-
-.modal-default-button {
-  float: right;
-}
-
-/*
- * The following styles are auto-applied to elements with
- * transition="modal" when their visibility is toggled
- * by Vue.js.
- *
- * You can easily play with the modal transition by editing
- * these styles.
- */
 
 .modal-enter {
   opacity: 0;
@@ -103,4 +91,5 @@ export default {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
 </style>

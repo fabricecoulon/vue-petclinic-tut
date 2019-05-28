@@ -8,9 +8,11 @@
       <!-- FIMXE: Use this modal component to confirm object deletion
       <button id="show-modal" @click="showModal = true">Show Modal</button>
       <modal v-if="showModal" @close="showModal = false">
-        <h3 slot="header">custom header</h3>
+        <h3 slot="header">Delete</h3>
+        <span slot="body">Are you sure you want to delete XYZ ?</span>
       </modal>
       -->
+
   </div>
 </template>
 
@@ -19,7 +21,7 @@
 import MainTabs from '@/components/MainTabs.vue'
 import Owners from '@/components/Owners.vue'
 import Pets from '@/components/Pets.vue'
-import Modal from '@/components/Modal.vue'
+//import Modal from '@/components/Modal.vue'
 
 export default {
   name: 'app',
@@ -27,16 +29,16 @@ export default {
     //HelloWorld
     MainTabs,
     Owners,
-    Pets,
-    Modal
+    Pets
+    //,Modal
   },
   data() {
     return {
       maintabs: [
         {id: 0, name: "Owners", selected: true },
         {id: 1, name: "Pets", selected: false}
-      ],
-      showModal: false
+      ]
+      //,showModal: false
     }
   },
   methods: {

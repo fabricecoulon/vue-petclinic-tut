@@ -13,25 +13,33 @@
         @delete:owner="deleteOwner"
       >
       </owners-table>
+
+      <modal v-if="showModal" @close="showModal = false">
+        <h3 slot="header">Delete</h3>
+        <span slot="body">Are you sure you want to delete XYZ ?</span>
+      </modal>
   </div>
 </template>
 
 <script>
 import OwnersTable from '@/components/OwnersTable.vue'
 import OwnerForm from '@/components/OwnerForm.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: 'owners',
   components: {
     OwnersTable,
-    OwnerForm
+    OwnerForm,
+    Modal
   },
   data() {
     return {
       owners: [
-        { id:1, fname: "fname1", lname: "lname1", email: "fname1.lname1@email.com" },
-        { id:2, fname: "fname2", lname: "lname2", email: "fname2.lname2@email.com" }
-      ]
+        { id:0, fname: "fname1", lname: "lname1", email: "fname1.lname1@email.com" },
+        { id:1, fname: "fname2", lname: "lname2", email: "fname2.lname2@email.com" }
+      ],
+      showModal: false
     }
   },
   methods: {
@@ -43,6 +51,10 @@ export default {
       this.owners = [ ...this.owners, newOwner ];
     },
     deleteOwner(ownerId) {
+      this.showModal = true;
+      console.log("deleteOwner: " + ownerId);
+    },
+    doDeleteOwner(ownerId) {
       this.owners = this.owners.filter(
         owner => owner.id !== ownerId
       );

@@ -16,8 +16,8 @@ export default {
   data() {
     return {
       pets: [
-        { id:1, name: "pet-name1", ownerId: 1 },
-        { id:2, name: "pet-name2", ownerId: 2 }
+        { id:0, name: "pet-name1", ownerId: 0 },
+        { id:1, name: "pet-name2", ownerId: 1 }
       ]
     }
   },
