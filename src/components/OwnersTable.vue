@@ -1,6 +1,9 @@
 <template>
 <div id="owners-table">
-  <table class="striped-table">
+  <p v-if="owners.length == 0" class="empty-table">
+    No owners found, table is empty.
+  </p>
+  <table v-else class="striped-table">
     <thead>
       <tr>
         <th>Firstname</th>
