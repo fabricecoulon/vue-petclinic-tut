@@ -11,6 +11,8 @@
       <owners-table
         :owners="owners"
         @delete:owner="deleteOwner"
+        @edit:owner="editOwner"
+        @save:owner="saveOwner"
       >
       </owners-table>
 
@@ -74,6 +76,18 @@ export default {
     ownerMatching(id) {
       const set = this.owners.filter(owner => owner.id == id);
       return (set && set.length > 0)?set[0]:null;
+    },
+    editOwner(id) {
+      const owner = this.ownerMatching(id);
+    },
+    saveOwner(id, updatedOwner) {
+      let owner = this.ownerMatching(id);
+      if (updatedOwner.fname === '' || updatedOwner.lname === '' || updatedOwner.email === '' ) {
+        return;
+      }
+      owner.fname = updatedOwner.fname;
+      owner.lname = updatedOwner.lname;
+      owner.email = updatedOwner.email;
     }
   },
   mounted() {

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="small-container">
+  <div id="app" class="medium-container">
       <!-- In the custom event listener below do not use "selectTab(arg)"
       but just "selectTab" -->
       <main-tabs :maintabs="maintabs" @select:tabid="selectTab"></main-tabs>
