@@ -37,7 +37,10 @@
         v-if="success"
         class="success-message"
       >✅ Owner '{{ showFullName }}' successfully added</p>
-      <button>Add Owner</button>
+      <span>
+        <button>Save</button>
+        <button type=button @click="$emit('add:cancel')">Cancel</button>
+      </span>
     </form>
   </div>
 </template>
@@ -121,6 +124,10 @@ export default {
 </script>
 
 <style scoped>
+button {
+  margin: 0 0.5rem 0 0;
+}
+
 form {
   margin-bottom: 2rem;
 }

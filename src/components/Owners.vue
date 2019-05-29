@@ -1,10 +1,11 @@
 <template>
   <div>
     <h1>Owners</h1>
+      <button v-show="!showAddForm" @click="showAddForm = true">Add</button>
       <!-- Retrieving events from the child component OwnerForm
       and reroute it to this application addOwner. '@' is the shortcut
       for Vue's directive 'v-on' -->
-      <owner-form @add:owner="addOwner"></owner-form>
+      <owner-form v-show="showAddForm" @add:owner="addOwner" @add:cancel="showAddForm = false"></owner-form>
       <!-- Binding the component attribute owners to this array of owners
       ':' is the shortcut for Vue's directive 'v-bind'
       -->
@@ -44,7 +45,8 @@ export default {
         { id:1, fname: "fname2", lname: "lname2", email: "fname2.lname2@email.com" }
       ],
       showModal: false,
-      deleteId: -1
+      deleteId: -1,
+      showAddForm: false
     }
   },
   methods: {
@@ -78,7 +80,9 @@ export default {
       return (set && set.length > 0)?set[0]:null;
     },
     editOwner(id) {
-      const owner = this.ownerMatching(id);
+      // Just some code to show how to catch events from the child OwnerTable
+      const set = this.owners.filter(owner => owner.id == id);
+      if (set === null) return;
     },
     saveOwner(id, updatedOwner) {
       let owner = this.ownerMatching(id);
