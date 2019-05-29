@@ -1,11 +1,19 @@
 <template>
   <div>
     <h1>Owners</h1>
-      <button v-show="!showAddForm" @click="showAddForm = true">Add</button>
+      <span>
+        <button v-show="!showAddForm" @click="showAddForm = true">Add</button>
+        <button v-show="!showAddForm" class="muted-button">Find</button>
+      </span>
       <!-- Retrieving events from the child component OwnerForm
       and reroute it to this application addOwner. '@' is the shortcut
       for Vue's directive 'v-on' -->
-      <owner-form v-show="showAddForm" @add:owner="addOwner" @add:cancel="showAddForm = false"></owner-form>
+      <owner-form
+        v-show="showAddForm"
+        @add:owner="addOwner"
+        @add:cancel="showAddForm = false"
+      >Add a new owner
+      </owner-form>
       <!-- Binding the component attribute owners to this array of owners
       ':' is the shortcut for Vue's directive 'v-bind'
       -->
@@ -93,15 +101,12 @@ export default {
       owner.lname = updatedOwner.lname;
       owner.email = updatedOwner.email;
     }
-  },
-  mounted() {
-    // This method is called once after Vue has been 'mounted' to a given DOM
-    // which is specified in main.js with function mount()
-    //alert("Vue has been mounted on #app")
   }
 }
 </script>
 
 <style scoped>
-
+button {
+  margin: 0 0.5rem 0.5rem 0;
+}
 </style>

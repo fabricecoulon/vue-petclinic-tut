@@ -6,8 +6,8 @@
   <table v-else class="striped-table">
     <thead>
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Email</th>
         <th>Actions</th>
       </tr>
@@ -37,6 +37,7 @@
           -->
           <button @click="toggelEditMode(owner.id, owner)">Edit</button>
           <button @click="$emit('delete:owner', owner.id)">Delete</button>
+          <button class="muted-button" @click="$emit('details:select', owner.id)">Details</button>
         </td>
         <td v-else>
           <button @click="saveOwner(owner.id, owner)">Save</button>

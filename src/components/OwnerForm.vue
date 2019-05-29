@@ -1,9 +1,10 @@
 <template>
   <div id="owner-form">
+    <slot></slot>
     <!-- When pressing this form button, this component
     handleSubmit will be called first: -->
     <form @submit.prevent="handleSubmit">
-      <label>Firstname</label>
+      <label>First Name</label>
       <!-- ':class' is Vue's class style binding
       it is used in this case to dynamically set the style class of this input
       to {'has-error': true} style if both submitting is true and
@@ -15,7 +16,7 @@
         @focus="clearStatus"
         @keypress="clearStatus"
       >
-      <label>Lastname</label>
+      <label>Last Name</label>
       <input type="text"
         :class="{ 'has-error': submitting && invalidLName }"
         v-model="owner.lname"
@@ -28,6 +29,12 @@
         v-model="owner.email"
         @focus="clearStatus"
       >
+      <label>Address</label>
+      <input type="text" />
+      <label>City</label>
+      <input type="text" />
+      <label>Telephone</label>
+      <input type="text" />
       <!-- In case of error on submitting -->
       <p
         v-if="error && submitting"
@@ -48,8 +55,10 @@
 <script>
 export default {
   name: 'owner-form',
+  props: [
+  ],
   data() {
-    return {
+    let data = {
       error: false,
       submitting: false,
       success: false,
@@ -62,7 +71,8 @@ export default {
         fname: '',
         lname: ''
       }
-    }
+    };
+    return data;
   },
   // computed properties on the forms 'v-model' this.owner...
   // these are methods that can be called before rendering occurs to process
@@ -120,7 +130,8 @@ export default {
       this.success = false
       this.error = false
     }
-  }}
+  }
+}
 </script>
 
 <style scoped>
