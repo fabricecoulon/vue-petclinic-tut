@@ -30,11 +30,23 @@
         @focus="clearStatus"
       >
       <label>Address</label>
-      <input type="text" />
+      <input type="text"
+      v-model="owner.address"
+      @focus="clearStatus"
+      @keypress="clearStatus"
+      >
       <label>City</label>
-      <input type="text" />
+      <input type="text"
+      v-model="owner.city"
+      @focus="clearStatus"
+      @keypress="clearStatus"
+      >
       <label>Telephone</label>
-      <input type="text" />
+      <input type="text"
+      v-model="owner.telephone"
+      @focus="clearStatus"
+      @keypress="clearStatus"
+      >
       <!-- In case of error on submitting -->
       <p
         v-if="error && submitting"
@@ -55,18 +67,14 @@
 <script>
 export default {
   name: 'owner-form',
-  props: [
-  ],
+  props: {
+    owner: Object
+  },
   data() {
     let data = {
       error: false,
       submitting: false,
       success: false,
-      owner: {
-        fname: '',
-        lname: '',
-        email: '',
-      },
       lastsubmittedowner: {
         fname: '',
         lname: ''
@@ -115,11 +123,7 @@ export default {
 
       this.lastsubmittedowner.fname = this.owner.fname
       this.lastsubmittedowner.lname = this.owner.lname
-      this.owner = {
-        fname: '',
-        lname: '',
-        email: '',
-      }
+
       this.success = true
       this.error = false
       // Flag that we are not in status 'submitting' anymore

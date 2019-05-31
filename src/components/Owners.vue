@@ -2,7 +2,7 @@
   <div>
     <h1>Owners</h1>
       <span>
-        <button v-show="!showAddForm" @click="showAddForm = true">Add</button>
+        <button v-show="!showAddForm" @click="onOwnerAdd">Add</button>
         <button v-show="!showAddForm" class="muted-button">Find</button>
       </span>
       <!-- Retrieving events from the child component OwnerForm
@@ -10,9 +10,10 @@
       for Vue's directive 'v-on' -->
       <owner-form
         v-show="showAddForm"
+        :owner="owner"
         @add:owner="addOwner"
         @add:cancel="showAddForm = false"
-      >Add a new owner
+      >Edit owner
       </owner-form>
       <!-- Binding the component attribute owners to this array of owners
       ':' is the shortcut for Vue's directive 'v-bind'
@@ -22,6 +23,7 @@
         @delete:owner="deleteOwner"
         @edit:owner="editOwner"
         @save:owner="saveOwner"
+        @details:select="selectOwner"
       >
       </owners-table>
 
@@ -49,15 +51,32 @@ export default {
   data() {
     return {
       owners: [
-        { id:0, fname: "fname1", lname: "lname1", email: "fname1.lname1@email.com" },
-        { id:1, fname: "fname2", lname: "lname2", email: "fname2.lname2@email.com" }
+        { id:0, fname: "fname1", lname: "lname1",
+          email: "fname1.lname1@email.com", address: 'addr1', city: 'city1',
+          telephone: '12345' },
+        { id:1, fname: "fname2", lname: "lname2",
+          email: "fname2.lname2@email.com", address: 'addr2', city: 'city2',
+          telephone: '67890' }
       ],
       showModal: false,
       deleteId: -1,
-      showAddForm: false
+      showAddForm: false,
+      owner: {
+        id: -1,
+        fname: "", lname: "",
+          email: "", address: '', city: ''
+      }
     }
   },
   methods: {
+    onOwnerAdd() {
+      this.showAddForm = true;
+      this.owner =  {
+              id: -1,
+              fname: "", lname: "",
+                email: "", address: '', city: ''
+            }
+    },
     addOwner(owner) {
       const nbOwners = this.owners.length;
       const lastId = (nbOwners > 0) ? this.owners[nbOwners-1].id : 0;
@@ -100,6 +119,11 @@ export default {
       owner.fname = updatedOwner.fname;
       owner.lname = updatedOwner.lname;
       owner.email = updatedOwner.email;
+    },
+    selectOwner(id) {
+      console.log("selectedOwner: " + id);
+      this.owner = this.ownerMatching(id);
+      this.showAddForm = true;
     }
   }
 }
