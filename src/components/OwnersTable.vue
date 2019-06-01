@@ -8,29 +8,29 @@
       <tr>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>Email</th>
+        <th>Phone</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="owner in owners" :key="owner.id">
         <td v-if="owner.id != editId">
-          {{ owner.fname }}
+          {{ owner.firstName }}
         </td>
         <td v-else>
-          <input type="text" v-model="tmpOwner.fname" />
+          <input type="text" v-model="tmpOwner.firstName" />
         </td>
         <td v-if="owner.id != editId">
-          {{ owner.lname }}
+          {{ owner.lastName }}
         </td>
         <td v-else>
-          <input type="text" v-model="tmpOwner.lname" />
+          <input type="text" v-model="tmpOwner.lastName" />
         </td>
         <td v-if="owner.id != editId">
-          {{ owner.email }}
+          {{ owner.telephone }}
         </td>
         <td v-else>
-          <input type="text" v-model="tmpOwner.email" />
+          <input type="text" v-model="tmpOwner.telephone" />
         </td>
         <td v-if="owner.id != editId">
           <!-- one can add the emit directly in the v-on:click directive too
@@ -58,9 +58,9 @@ export default {
   methods: {
     toggelEditMode(id, owner) {
       this.editId = id;
-      this.tmpOwner.fname = owner.fname;
-      this.tmpOwner.lname = owner.lname;
-      this.tmpOwner.email = owner.email;
+      this.tmpOwner.firstName = owner.firstName;
+      this.tmpOwner.lastName = owner.lastName;
+      this.tmpOwner.telephone = owner.telephone;
       this.$emit('edit:owner', owner.id);
     },
     toggleReadMode() {
@@ -78,7 +78,7 @@ export default {
   data() {
     return {
       editId: -1,
-      tmpOwner: { fname: '', lname: '', email: '' }
+      tmpOwner: { firstName: '', lastName: '', telephone: '' }
     }
   }
 }

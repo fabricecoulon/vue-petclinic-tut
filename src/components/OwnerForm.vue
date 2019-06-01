@@ -12,22 +12,16 @@
       -->
       <input ref="first" type="text"
         :class="{ 'has-error': submitting && invalidFName }"
-        v-model="owner.fname"
+        v-model="owner.firstName"
         @focus="clearStatus"
         @keypress="clearStatus"
       >
       <label>Last Name</label>
       <input type="text"
         :class="{ 'has-error': submitting && invalidLName }"
-        v-model="owner.lname"
+        v-model="owner.lastName"
         @focus="clearStatus"
         @keypress="clearStatus"
-      >
-      <label>Email</label>
-      <input type="text"
-        :class="{ 'has-error': submitting && invalidEmail }"
-        v-model="owner.email"
-        @focus="clearStatus"
       >
       <label>Address</label>
       <input type="text"
@@ -76,8 +70,8 @@ export default {
       submitting: false,
       success: false,
       lastsubmittedowner: {
-        fname: '',
-        lname: ''
+        firstName: '',
+        lastName: ''
       }
     };
     return data;
@@ -88,16 +82,16 @@ export default {
   // submitted owners' first and last name
   computed: {
     invalidFName() {
-      return this.owner.fname === ''
+      return this.owner.firstName === ''
     },
     invalidLName() {
-      return this.owner.lname === ''
+      return this.owner.lastName === ''
     },
-    invalidEmail() {
-      return this.owner.email === ''
+    invalidTelephone() {
+      return this.owner.telephone === ''
     },
     showFullName() {
-      return this.lastsubmittedowner.fname + " " + this.lastsubmittedowner.lname
+      return this.lastsubmittedowner.firstName + " " + this.lastsubmittedowner.lastName
     }
   },
   // Custom methods MUST be put under Vue's 'methods:'
@@ -108,7 +102,7 @@ export default {
       // Flag that we are in status 'submitting'
       this.submitting = true
 
-      if (this.invalidFName || this.invalidLName || this.invalidEmail) {
+      if (this.invalidFName || this.invalidLName || this.invalidTelephone) {
         this.error = true
         return
       }
@@ -121,8 +115,8 @@ export default {
       // Return the focus to the form's element tagged with ref "first"
       this.$refs.first.focus()
 
-      this.lastsubmittedowner.fname = this.owner.fname
-      this.lastsubmittedowner.lname = this.owner.lname
+      this.lastsubmittedowner.firstName = this.owner.firstName
+      this.lastsubmittedowner.lastName = this.owner.lastName
 
       this.success = true
       this.error = false
